@@ -47,7 +47,7 @@ class FORSReflex():
         self.data = Table()
 
         #Create mask for 0s by looking at the first star in table
-        good = np.where(self.error[0].data[0,:] > 0])
+        good = np.where(self.error[0].data[0,:] > 0)
 
         for i in range(self.flux[0].data.shape[0]):
 
