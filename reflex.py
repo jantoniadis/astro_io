@@ -45,9 +45,15 @@ class FORSReflex():
 
     def create_data_table(self):
         self.data = Table()
+
+        #Create mask for 0s by looking at the first star in table
+        good = np.where(self.error[0].data[0,:] > 0]
+
         for i in range(self.flux[0].data.shape[0]):
-            f = Column(self.flux[0].data[i,:],name = 'flux_' + self.indexes[i])
-            e = Column(self.error[0].data[i,:],name = 'error_' + self.indexes[i])
+
+            #Mask out zeros
+            f = Column(self.flux[0].data[i,:][good],name = 'flux_' + self.indexes[i])
+            e = Column(self.error[0].data[i,:][good],name = 'error_' + self.indexes[i])
             self.data.add_column(f)
             self.data.add_column(e)
 
@@ -55,6 +61,7 @@ class FORSReflex():
         self.data.meta = self.keys        
 
         w = Column( np.arange(self.keys['CRVAL1'], self.keys['CRVAL1'] + self.keys['CD1_1']*self.keys['NAXIS1'], self.keys['CD1_1']),name = 'w')
+        w = w[good]
         self.data.add_column(w)
 
     @classmethod
